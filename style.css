@@ -1,3 +1,7 @@
+* {
+  transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
 html,
 body {
   height: 100%;
@@ -17,7 +21,7 @@ body {
 h1 {
   color: #7bdaf7;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   margin-bottom: 0;
   font-size: 2.4rem;
 }
@@ -27,6 +31,7 @@ h1 {
   margin: 0 auto;
   padding: 7px;
   border-radius: 15px;
+  box-shadow: 0px 0px 10px #7bdaf7c9;
 }
 
 .row input {
@@ -58,6 +63,19 @@ h1 {
   cursor: pointer;
 }
 
+.button:active {
+  transform: scale(0.95);
+  background-color: #d4e4ee49;
+  color: #fff;
+}
+
+.button.keyboard-active,
+.button.active {
+  transform: scale(0.95);
+  background-color: #d4e4ee49;
+  color: #fff;
+}
+
 /* footer */
 .footer {
   color: #fff;
@@ -65,7 +83,7 @@ h1 {
   align-items: center;
   justify-content: center;
   font-weight: 300;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .footer a {
@@ -75,6 +93,9 @@ h1 {
 }
 
 @media only screen and (max-width: 490px) {
+  * {
+    transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
   h1 {
     margin-top: 4rem;
     font-size: 1.4rem;
