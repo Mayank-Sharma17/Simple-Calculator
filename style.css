@@ -19,7 +19,10 @@ body {
 }
 
 h1 {
-  color: #7bdaf7;
+  background: linear-gradient(to right, #7bdaf7, #3d3e78);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
   text-align: center;
   margin-top: 1.5rem;
   margin-bottom: 0;
