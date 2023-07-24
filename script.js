@@ -1,17 +1,17 @@
+const buttons = document.querySelectorAll(".button");
+
 let result = "";
 let display = document.querySelector("input");
-
-const buttons = document.querySelectorAll(".button");
 
 // Function to handle overall functionality
 const handleButtonClick = (buttonValue) => {
   if (buttonValue === "C") {
     result = "";
   } else if (buttonValue === "&lt;") {
-    result = result.slice(0, -1); // remove the last char in the result string
+    // remove the last char in the result string
+    result = result.slice(0, -1);
   } else if (buttonValue === "()") {
     // logic for '(' & ')'
-
     if (
       result.indexOf("(") === -1 ||
       (result.indexOf("(") != -1 &&
@@ -29,20 +29,10 @@ const handleButtonClick = (buttonValue) => {
     }
     result += buttonValue;
   } else if (buttonValue === "x") {
-    buttonValue = "*";
-    let currentResult = display.value;
-
-    result = currentResult + buttonValue;
-  } else if (buttonValue === ".") {
-    if (display.value.includes(".")) {
-      // if '.' already present in result string
-      return;
-    } else {
-      result += buttonValue;
-    }
+    result += "*";
   } else if (buttonValue === "=") {
     try {
-      result = math.evaluate(result);
+      result = doCalculation(result);
     } catch (error) {
       result = "Invalid expression";
     }
@@ -53,12 +43,84 @@ const handleButtonClick = (buttonValue) => {
   display.value = result;
 };
 
-// Add click event listeners to the buttons
-for (let button of buttons) {
-  button.addEventListener("click", (e) => {
-    let buttonValue = e.target.innerHTML;
-    handleButtonClick(buttonValue);
-  });
+
+function isOperator(char) { // return true/false is the operator is include in it or not
+  return ['+', '-', '*', '/', '%'].includes(char);
+}
+
+function getPrecedence(operator) {
+  if (operator === '+' || operator === '-') {
+    return 1;
+  } else if (operator === '*' || operator === '/' || operator === '%') {
+    return 2;
+  }
+  return 0;
+}
+
+function applyOperator(operators, values) {
+  const operator = operators.pop();
+  const right = values.pop();
+  const left = values.pop();
+
+  switch (operator) {
+    case '+':
+      values.push(left + right);
+      break;
+    case '-':
+      values.push(left - right);
+      break;
+    case '*':
+      values.push(left * right);
+      break;
+    case '/':
+      values.push(left / right);
+      break;
+    case '%':
+      values.push(right/100);
+      break;
+    default:
+      throw new Error("Unknown operator: " + operator);
+  }
+}
+
+function doCalculation(expression) {
+  const numbers = expression.split(/[-+*/()%]/).map(parseFloat).filter(num => !isNaN(num));
+  const operators = expression.replace(/[\d.]/g, "").split("");
+  const operatorStack = [];
+  const valueStack = [];
+
+  valueStack.push(numbers.shift());
+
+  for (let i = 0; i < operators.length; i++) {
+    const operator = operators[i];
+
+    if (operator === '(') {
+      operatorStack.push(operator);
+    } else if (operator === ')') {
+      while (operatorStack[operatorStack.length - 1] !== '(') {
+        applyOperator(operatorStack, valueStack);
+      }
+      operatorStack.pop(); // Remove the remaining '('
+    } else {
+      while (
+        operatorStack.length &&
+        getPrecedence(operatorStack[operatorStack.length - 1]) >= getPrecedence(operator)
+      ) {
+        applyOperator(operatorStack, valueStack);
+      }
+      operatorStack.push(operator);
+    }
+    
+    if (numbers.length > i) {
+      valueStack.push(numbers[i]);
+    }
+  }
+
+  while (operatorStack.length) {
+    applyOperator(operatorStack, valueStack);
+  }
+
+  return valueStack[0];
 }
 
 // handle key press event
@@ -74,6 +136,10 @@ const handleKeyDown = (event) => {
     buttonValue = "()";
   } else if (key === "Enter") {
     buttonValue = "=";
+  } else if (key === "*") {
+    buttonValue = "x";
+  } else if (key === "p") {
+    buttonValue = "%";
   } else {
     buttonValue = key;
   }
@@ -94,6 +160,14 @@ const handleKeyDown = (event) => {
     handleButtonClick(buttonValue);
   }
 };
+
+// Add click event listeners to the buttons
+for (let button of buttons) {
+  button.addEventListener("click", (e) => {
+    let buttonValue = e.target.innerHTML;
+    handleButtonClick(buttonValue);
+  });
+}
 
 // Add keydown event listener to the document
 document.addEventListener("keydown", handleKeyDown);
