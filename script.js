@@ -43,11 +43,6 @@ const handleButtonClick = (buttonValue) => {
   display.value = result;
 };
 
-
-function isOperator(char) { // return true/false is the operator is include in it or not
-  return ['+', '-', '*', '/', '%'].includes(char);
-}
-
 function getPrecedence(operator) {
   if (operator === '+' || operator === '-') {
     return 1;
@@ -76,7 +71,7 @@ function applyOperator(operators, values) {
       values.push(left / right);
       break;
     case '%':
-      values.push(right/100);
+      values.push(right / 100);
       break;
     default:
       throw new Error("Unknown operator: " + operator);
@@ -89,7 +84,7 @@ function doCalculation(expression) {
   const operatorStack = [];
   const valueStack = [];
 
-  valueStack.push(numbers.shift());
+  valueStack.push(numbers.shift()); // shift() returns the 1st removed array element
 
   for (let i = 0; i < operators.length; i++) {
     const operator = operators[i];
