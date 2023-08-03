@@ -33,7 +33,7 @@ h1 {
   background-color: #262a37;
   margin: 0 auto;
   padding: 7px;
-  border-radius: 15px;
+  border-radius: 22px;
   box-shadow: 0px 0px 10px #7bdaf7c9;
 }
 
@@ -103,12 +103,10 @@ h1 {
     margin-top: 4rem;
     font-size: 1.4rem;
   }
-
+  
   .row input {
-    padding: 0;
-    width: 100%;
     height: 4rem;
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 
   .button {
