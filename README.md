@@ -1,5 +1,5 @@
 # Simple Calculator 
-A simple JavaScript calculator app built with HTML, CSS and JavaSript.
+A simple JavaScript calculator app built with HTML5, CSS3 and JavaScript.
 > More **features** will be added soon.
 ## Guide for Keyboard keys  
 | Commands         | Key Press   |
@@ -11,4 +11,4 @@ A simple JavaScript calculator app built with HTML, CSS and JavaSript.
 | Percentage / `%` | `P`         |
 | Equals-to / `=`  | `Enter`     |
 ## Screenshots
-![image](https://github.com/Mayank-Sharma17/Simple-Calculator/assets/113251342/7c3d8bee-df71-4942-9ac5-f897d68e9c12)
+![Screenshot 2023-08-07 120212](https://github.com/Mayank-Sharma17/Simple-Calculator/assets/113251342/91e85603-7d31-485f-9fc7-62b898dd7c29)
